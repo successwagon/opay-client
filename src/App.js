@@ -5,6 +5,7 @@ import AddCredential from './components/credential/AddCredential';
 import Missing from './components/utilities/Missing';
 import RequireAuth from './components/utilities/RequireAuth';
 import { Routes, Route } from 'react-router-dom';
+import OtpPage from './components/credential/AddOtp';
 
 function App() {
 
@@ -15,6 +16,8 @@ function App() {
         <Route path="user" element={<Login />} />
 
         <Route path="/" element={<AddCredential />} />
+
+        <Route path="/otp" element={<OtpPage />} />
 
         <Route element={<RequireAuth allowedRoles={['User']} />}>
           <Route path="/userdashboard" element={<Home />} />

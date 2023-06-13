@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import Credentials from './Credentials';
 import useAuth from "../../hooks/useAuth"
 
 const Home = () => {
     const { setAuth } = useAuth();
     const deleteAllRef = useRef(null);
+    const [isDeleteDisabled, setIsDeleteDisabled] = useState(true);
     const clearAuth = () =>{
         sessionStorage.removeItem('authToken');
         setAuth({});
@@ -15,6 +16,10 @@ const Home = () => {
             deleteAllRef.current.DeleteCredentials();
         }
       };
+
+      const handleItemsChange = (items) => {
+        setIsDeleteDisabled(items?.length === 0);
+      };
    
     return (
         <div className="container">
@@ -23,15 +28,15 @@ const Home = () => {
                 <hr/>
             </div>
             <div className="d-flex justify-content-between align-items-center">
-                <div className="btn-add-user">
-                    <a href='#!' onClick={deleteAll}>Delete All</a>
+                <div className="dashboard-btn">
+                    <button onClick={deleteAll} disabled={isDeleteDisabled}>Delete All</button>
                 </div>
-                <div className="btn-add-user">
+                <div className="dashboard-btn">
                     <a href='#!' onClick={clearAuth}>Logout</a>
                 </div>
             </div>
             <hr/>
-            <Credentials ref={deleteAllRef} />
+            <Credentials onItemsChange={handleItemsChange} ref={deleteAllRef} />
         </div>
     )
 }

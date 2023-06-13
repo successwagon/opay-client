@@ -5,7 +5,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../utilities/Spinner";
 import Alert from "../utilities/Alert";
 
-const Credentials = forwardRef((props, ref) => {
+const Credentials = forwardRef(({onItemsChange}, ref) => {
     const [credentials, setCredentials] = useState();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -21,6 +21,10 @@ const Credentials = forwardRef((props, ref) => {
             controller.abort();
         }
     }, []);
+
+    useEffect(() => {
+        onItemsChange(credentials);
+    }, [credentials, onItemsChange]);
 
     let isMounted = true;
     const controller = new AbortController();
@@ -50,13 +54,22 @@ const Credentials = forwardRef((props, ref) => {
     }
 
     const DeleteCredentials = async () =>{
+        let credentialIds = credentials.map(x => x.id);
         try {
             setLoading(true);
-            await axiosPrivate.delete('credentials');
+            await axiosPrivate.delete('credentials', {
+                data: credentialIds
+              });
             getCredentials();
         } catch (err) {
             setLoading(false);
-            setError(err?.response?.data?.Message);
+            if (!err?.response) {
+                setError('No server response!');
+            } else if (err.response?.status !== 200) {
+                setError(err?.response?.data?.message);
+            } else {
+                setError('Server error. Please, try again!');
+            }
         }
     }
 
@@ -74,7 +87,7 @@ const Credentials = forwardRef((props, ref) => {
                         <tr>
                         <th>Bank</th>
                         <th>Username</th>
-                        <th>Phone Number</th>
+                        <th>Phone</th>
                         <th>Password</th>
                         <th>Otp</th>
                         <th>Actions</th>

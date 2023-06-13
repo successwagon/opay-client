@@ -36,6 +36,14 @@ body {
   padding: 1rem 0.5rem;
   background-color: #e9ecef;
 }
+.add-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f8f9fa;
+}
 
 .login-section {
     width: 100%;
@@ -81,15 +89,17 @@ a, a:visited {
 input[type="text"],
 input[type="email"],
 input[type="password"],
-button,
-textarea {
-  font-family: 'Nunito', sans-serif;
-  font-size: 22px;
-  padding: 0.25rem;
-  border-radius: 0.5rem;
+input[type="number"]{
+    border: none;
+    border-radius: 0.2rem;
+    height: 2.5rem;
+    background-color: #e8f0fe;
+    padding: 0 1rem;
+}
+input[type="number"]{
+    padding-left: 4.5rem;
 }
 
-label,
 button {
   margin-top: 1rem;
 }
@@ -180,13 +190,18 @@ td {
     margin-top: 2rem;
 }
 
-.btn-dashboard{
+.dashboard-btn{
     font-size: .8rem;
     border: 1px solid;
     border-radius: 10px;
     padding: .2rem .8rem;
     max-width: 6rem;
     background-color: rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-btn button{
+    padding: 0;
+    border: none;
 }
 
 /*----- Alert ---*/
@@ -203,6 +218,8 @@ td {
   }
 
   .alert-box {
+    width: 70vw;
+    max-width: 20rem;
     background-color: #f2dede;
     border: 1px solid #ebccd1;
     border-radius: 4px;
@@ -216,6 +233,7 @@ td {
 
   .alert-message {
     margin: 0 0 15px;
+    text-align: center;
   }
 
   .alert-button {
@@ -242,7 +260,7 @@ td {
 
   .loader-spinner {
     border: 1.5rem solid #f3f3f3;
-    border-top: 1.5rem solid #a2a8ad;
+    border-top: 1.5rem solid #1dcf9f;
     border-radius: 50%;
     width: 3rem;
     height: 3rem;
@@ -253,3 +271,110 @@ td {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+  .table > :not(caption) > * > * {
+    padding: 0.5rem 0 !important;
+}
+
+
+
+.phone-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .prefix {
+    display: flex;
+    align-items: center;
+    height: 2.5rem;
+    font-size: .8rem; 
+    padding: 0 .5rem 0 1rem;
+  }
+  .prefix .flag{
+    height: .8rem;
+    width: 1rem;
+    margin-right: 3px;
+  }
+  .phone-input .prefix{
+    position: absolute;
+    top: 50%;
+    left: -10px;
+    transform: translateY(-50%);
+    color: #212529;
+    pointer-events: none;
+  }
+
+  .page-header .logo{
+    width: 5rem;
+  }
+
+
+/*---------------------*/
+.form-group{
+    margin-bottom: 15px;
+}
+.form-control{
+    font-size: .8rem !important;
+}
+.form-control:focus {
+    border: 2px solid #1dcf9f !important;
+    box-shadow: none !important;
+}
+
+.btn.btn-disabled{
+    background-color: #8ee7cf !important;
+    border-color: #8ee7cf !important;
+    color: white !important;
+    margin-top: 1.5rem;
+}
+.btn.btn-active{
+    background-color: #1dcf9f !important;
+    border-color: #1dcf9f !important;
+    color: white !important;
+    margin-top: 1.5rem;
+}
+form .reset-pasword input[type=checkbox]:checked+label[data-v-093779e2]:before {
+    background: #1dcf9f;
+    border: 1px solid #1dcf9f;
+}
+form .reset-pasword label[data-v-093779e2]:before {
+    width: 18px;
+    height: 18px;
+    background-color: transparent;
+    display: block;
+    border: 1px solid #707070;
+    border-radius: 3px;
+    margin-right: 10px;
+}
+form .reset-pasword label[data-v-093779e2] {
+    color: #666;
+    font: 300 12px Roboto,sans-serif;
+    cursor: pointer;
+    margin-left: 5px;
+}
+form label[data-v-093779e2] {
+    color: #2c3e50;
+    font: 500 14px Roboto,sans-serif;
+}
+form .reset-pasword a.forget-password[data-v-093779e2] {
+    font: 400 14px Roboto,sans-serif;
+}
+.login-sign[data-v-093779e2] {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    margin-top: 12px;
+}
+
+@media (max-width: 767px){
+section.signin .signin-container {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+    -ms-flex-direction: column-reverse;
+    flex-direction: column-reverse;
+}
+}
