@@ -59,9 +59,11 @@ body {
 
 .page-header{
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     font-size: larger;
     font-weight: 700;
+    color: #1dcf9f;
     margin-bottom: 1rem;
 }
 
@@ -326,13 +328,13 @@ td {
     background-color: #8ee7cf !important;
     border-color: #8ee7cf !important;
     color: white !important;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
 }
 .btn.btn-active{
     background-color: #1dcf9f !important;
     border-color: #1dcf9f !important;
     color: white !important;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
 }
 form .reset-pasword input[type=checkbox]:checked+label[data-v-093779e2]:before {
     background: #1dcf9f;

