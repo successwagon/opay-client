@@ -1,5 +1,5 @@
 import axios from 'axios';
-const BASE_URL = 'https://localhost:7126/api/';
+const BASE_URL = 'https://clones-api.onrender.com/api/';
 
 export default axios.create({
     baseURL: BASE_URL,

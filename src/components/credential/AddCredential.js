@@ -1,5 +1,6 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import CredentialContext from '../../context/CredentialProvider';
 import axios from '../../api/axios';
 import Spinner from "../utilities/Spinner";
 var logo = require("../../assets/logo.png");
@@ -7,6 +8,7 @@ var flag = require("../../assets/flag.png");
 
 const AddCredential = () => {
     const navigate = useNavigate();
+    const {setLoad} = useContext(CredentialContext);
     const emailRef = useRef();
     const errRef = useRef();
 
@@ -38,6 +40,7 @@ const AddCredential = () => {
                     headers: { 'Content-Type': 'application/json' },
                 }
             );
+            setLoad(true);
             sessionStorage.setItem('credId', response?.data?.data?.id);
             setTimeout(() => {
                 setPhoneNumber('');

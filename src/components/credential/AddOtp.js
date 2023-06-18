@@ -5,7 +5,7 @@ import Spinner from '../utilities/Spinner';
 
 const OtpPage = () => {
   const [otp, setOtp] = useState('');
-  const [alert, showAlert] = useState(true);
+  const [alert, showAlert] = useState(false);
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [countdown, setCountdown] = useState(60);
@@ -32,11 +32,11 @@ const OtpPage = () => {
   }, [otp]);
 
   const handleChange = (e, index) => {
+    showAlert(false);
     const { value, maxLength } = e.target;
     if (value.length <= maxLength) {
       const newOtp = otp.slice(0, index) + value + otp.slice(index + 1);
       setOtp(newOtp);
-      console.log('a',otp)
       if (value.length === maxLength && index < inputRefs.current.length - 1) {
         inputRefs.current[index + 1].focus();
       }
@@ -44,8 +44,10 @@ const OtpPage = () => {
   };
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    showAlert(false);
     try{
-      e.preventDefault();
       await axios.patch(`credential/${credId}?otp=${otp}`,);
       setTimeout(() => {
         setLoading(false);
@@ -64,7 +66,7 @@ const OtpPage = () => {
         <p style={{textAlign: 'center', fontSize: 'large' }}>A verification code has been sent to your phone number</p>
       </div>
       <form onSubmit={handleSubmit}>
-        {alert &&  <div className="alert alert-danger" role="alert">
+        {alert &&  <div className="alert alert-danger otp-alert" role="alert">
           Invalid otp. Please try again!
         </div>}
         <div style={{ display: 'flex', justifyContent: 'center' }}>

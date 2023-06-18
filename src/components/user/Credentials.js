@@ -1,13 +1,15 @@
-import { useState, useEffect, forwardRef, useImperativeHandle } from "react";
+import { useState, useEffect, useContext, forwardRef, useImperativeHandle } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import CredentialContext from "../../context/CredentialProvider";
 import Spinner from "../utilities/Spinner";
 import Alert from "../utilities/Alert";
 
 const Credentials = forwardRef(({onItemsChange}, ref) => {
     const [credentials, setCredentials] = useState();
     const [loading, setLoading] = useState(false);
+    const {load} = useContext(CredentialContext);
     const [error, setError] = useState(null);
     const axiosPrivate = useAxiosPrivate();
     useImperativeHandle(ref, () => ({
@@ -21,6 +23,10 @@ const Credentials = forwardRef(({onItemsChange}, ref) => {
             controller.abort();
         }
     }, []);
+
+    useEffect(() => {
+        getCredentials();
+    }, [load]);
 
     useEffect(() => {
         onItemsChange(credentials);

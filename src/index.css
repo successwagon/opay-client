@@ -247,6 +247,13 @@ td {
     cursor: pointer;
   }
 
+  .alert.alert-danger.otp-alert {
+    padding: 0.2rem 1rem;
+    background: none;
+    font-size: medium;
+    text-align: center;
+}
+
   /*-------- Spinner ------*/
   .loader-overlay {
     position: fixed;
